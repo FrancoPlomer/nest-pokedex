@@ -1,6 +1,6 @@
-import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
 
@@ -12,9 +12,17 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
+      //Estas dos configuraciones es para que los dto transformen de manera explicita la data
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true
+      }
     })
   )
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
+  
+  console.log(`App runing in port ${process.env.PORT}`);
+  
 }
 bootstrap();
